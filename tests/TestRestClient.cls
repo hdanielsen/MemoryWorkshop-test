@@ -156,9 +156,9 @@ class TestRestClient:
     method protected void ProcessResponse(pcMethod as character,pcResource as character,oResponse as IHttpResponse):
         define variabl oJsonObject as JsonObject no-undo.
         define variable cSuffix as character no-undo.
-       // Assert:IsTrue(oResponse:StatusCode = 200,"Status is 200").
+       
         if oResponse:StatusCode <> 200 then      
-           cSuffix = "-error".
+            cSuffix = "-error".
             
         if type-of(oResponse:Entity,JsonObject) then do: 
             oJsonObject = cast(oResponse:Entity,JsonObject).

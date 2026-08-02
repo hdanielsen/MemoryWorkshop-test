@@ -171,7 +171,7 @@ class TestRestClient:
         else 
            Assert:IsTrue(false,"Response is JSON").
                  
-         if oResponse:StatusCode <> 200 then     
+        if oResponse:StatusCode <> 200 then     
             Assert:IsTrue(false,"Status is 200"). 
     end method.    
           

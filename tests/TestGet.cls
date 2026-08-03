@@ -45,7 +45,12 @@ class TestGet inherits TestBase:
         define variable oResponse         as JsonObject no-undo.
         define variable oMap as StringStringMap no-undo.
         define variable iTable as integer no-undo.
+        define variable cprefix as character no-undo. 
         
+        cPrefix = substitute("&1-&2",
+                             iso-date(today),
+                             replace(string(time,"HH:MM"),":","")
+                             ).
         oBe = GetBE(Resource).
         
         oMap = new StringStringMap().
@@ -55,7 +60,7 @@ class TestGet inherits TestBase:
                                                       oMap,
                                                        oBe).
         
-        oResponse:WriteFile(subst("temp/get&1.json",Resource),true).
+        oResponse:WriteFile(subst("temp/&1-get-&2.json",cPrefix,Resource),true).
         
         return.
         catch e as Progress.Lang.Error :

@@ -117,6 +117,11 @@ class TestRestClient:
     end method. 
     
     @Test.
+    method public void TestGetSalesrepQuotas():
+       executeGet("salesrepQuotas").
+    end method. 
+    
+    @Test.
     method public void TestGetShipTos():
        executeGet("shipTos").
     end method. 
@@ -156,13 +161,20 @@ class TestRestClient:
     method protected void ProcessResponse(pcMethod as character,pcResource as character,oResponse as IHttpResponse):
         define variabl oJsonObject as JsonObject no-undo.
         define variable cSuffix as character no-undo.
-       
+        define variable cprefix as character no-undo. 
+        
+        cPrefix = substitute("&1-&2",
+                             iso-date(today),
+                             replace(string(time,"HH:MM"),":","")
+                             ).
+           
         if oResponse:StatusCode <> 200 then      
             cSuffix = "-error".
             
         if type-of(oResponse:Entity,JsonObject) then do: 
             oJsonObject = cast(oResponse:Entity,JsonObject).
-            oJsonObject:WriteFile(substitute("Temp/&1-&2&3.json",
+            oJsonObject:WriteFile(substitute("Temp/&1-&2-&3&4.json",
+                                             cPrefix,
                                              pcMethod,
                                              pcResource,
                                              cSuffix), 

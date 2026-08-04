@@ -1,0 +1,108 @@
+ 
+ /*------------------------------------------------------------------------
+    File        : TestCustomer
+    Purpose     : 
+    Syntax      : 
+    Description : 
+    Author(s)   : hdaniels
+    Created     : Sun Aug 02 08:27:40 EDT 2026
+    Notes       : 
+  ----------------------------------------------------------------------*/
+
+
+block-level on error undo, throw.
+
+using OpenEdge.Core.Collections.IStringStringMap from propath.
+using OpenEdge.Core.Collections.StringStringMap from propath.
+using Pmfo.Core.BusinessLogic.IBusinessEntity from propath.
+using Pmfo.Core.BusinessLogic.IGetDataRequest from propath.
+using Pmfo.Core.BusinessLogic.IGetDataResponse from propath.
+using Pmfo.Core.Error.ApplicationError from propath.
+using Pmfo.Core.Service.IClientGetRequest from propath.
+using Pmfo.Core.Service.OperationHandler from propath.
+using Pmfo.Util.JsonUtil from propath.
+using Progress.Json.ObjectModel.JsonObject from propath.
+
+class TestUpdate inherits TestBase:
+    
+    define public property Resource  as character no-undo  get. protected set.
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    constructor public TestUpdate (pcResource as char  ):
+        super ().
+        Resource = pcResource.
+    end constructor.
+
+   
+    method protected JsonObject PostData(  ):  
+        define variable oBe               as IBusinessEntity no-undo.
+        define variable hDataset          as handle no-undo.
+        define variable qmap              as IStringStringMap no-undo. 
+        define variable oClientGetRequest as IClientGetRequest   no-undo.
+        define variable cservice          as character no-undo.
+        define variable oGetDataRequest   as IGetDataRequest     no-undo.
+        define variable oGetDataResponse  as IGetDataResponse no-undo.
+        define variable oResponse         as JsonObject no-undo.
+        define variable oMap as StringStringMap no-undo.
+        define variable iTable as integer no-undo.
+        define variable cprefix as character no-undo. 
+        define variable oJson as JsonObject no-undo.
+     
+        oBe = GetBE(Resource).
+        file-info:file-name = substitute ("data/post-&1.json",Resource). 
+        if file-info:full-pathname > "" then 
+           oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
+        if not valid-object(oJson) then 
+           undo, throw new ApplicationError(subst("No POST Json  found for '&1'",Resource)).
+        oMap = new StringStringMap().
+        oResponse = OperationHandler:ExecutePostOrPutOrDelete(
+                                                      "POST",
+                                                      oJson,
+                                                      "http://10.0.0.198:8080/minster/web/api", 
+                                                      Resource,
+                                                      oMap,
+                                                      oBe).
+        cPrefix = substitute("&1-&2",
+                             iso-date(today),
+                             replace(string(time,"HH:MM"),":","")
+                             ).
+        oResponse:WriteFile(subst("temp/&1-posted-&2.json",cPrefix,Resource),true).
+        
+        return oResponse.
+        catch e as Progress.Lang.Error :
+           Showerrorsinwindow = true.
+           HandleError(e).    
+        end catch. 
+    end method.
+    
+    
+    method protected void DeleteData( pJson as JsonObject ):  
+        define variable oBe               as IBusinessEntity no-undo.
+        define variable hDataset          as handle no-undo.
+         define variable oResponse         as JsonObject no-undo.
+        define variable oMap as StringStringMap no-undo.
+         
+     
+        oBe = GetBE(Resource).
+        file-info:file-name = substitute ("data/post-&1.json",Resource). 
+         
+        
+        oMap = new StringStringMap().
+        OperationHandler:ExecutePostOrPutOrDelete(
+                                                  "DELETE",
+                                                  pJson,
+                                                  "http://10.0.0.198:8080/minster/web/api", 
+                                                  Resource,
+                                                  oMap,
+                                                  oBe).
+         
+         
+        catch e as Progress.Lang.Error :
+           Showerrorsinwindow = true.
+           HandleError(e).    
+        end catch. 
+    end method.
+end class.

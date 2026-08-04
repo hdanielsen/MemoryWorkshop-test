@@ -19,10 +19,11 @@ using OpenEdge.Core.Assert from propath.
 using System.Net.HttpStatusCode from assembly.
 using Progress.Json.ObjectModel.JsonObject from propath.
 using Pmfo.Util.FileIO from propath.
+using Pmfo.Util.JsonUtil from propath.
 
 block-level on error undo, throw.
 
-class TestRestClient:
+class TestRestClientUpdate:
     {Pmfo/Util/filedata.i}
    define protected property RestClient as RestClient no-undo get. set.
     
@@ -52,7 +53,7 @@ class TestRestClient:
         do:
             fileio:getFiles(file-info:full-pathname, output table fileData).  
             for each fileData with width 300:
-               if filedata.fileType = "text/json" and fullName matches "*-GET-*" then
+               if filedata.fileType = "text/json" and fullName matches "*-POST-*" then
                    os-delete value(filedata.fullPath) .
                  
             end.    
@@ -60,131 +61,21 @@ class TestRestClient:
     end method.
     
     @Test.
-    method public void TestGetBenefits():
-       executeGet("benefits").
+    method public void TestPostCustomers():
+       executePost("customers").
     end method. 
     
-    @Test.
-    method public void TestGetBilltos():
-       executeGet("billTOs").
-    end method. 
-    
-    @Test.
-    method public void TestGetBins():
-       executeGet("bins").
-    end method. 
-    
-    @Test.
-    method public void TestGetCustomers():
-       executeGet("customers").
-    end method. 
-    
-    @Test.
-    method public void TestGetDepartments():
-       executeGet("departments").
-    end method. 
-    
-    @Test.
-    method public void TestGetEmployees():
-       executeGet("employees").
-    end method. 
-    
-    @Test.
-    method public void TestGetFamilies():
-       executeGet("families").
-    end method. 
-    
-    @Test.
-    method public void TestGetFeedbacks():
-       executeGet("feedbacks").
-    end method. 
-    
-    @Test.
-    method public void TestGetInventoryTransactions():
-       executeGet("inventoryTransactions").
-    end method. 
-    
-    @Test.
-    method public void TestGetInvoices():
-       executeGet("invoices").
-    end method. 
-    
-    @Test.
-    method public void TestGetItems():
-       executeGet("items").
-    end method. 
-    
-    @Test.
-    method public void TestGetLocalDefaults():
-       executeGet("localdefaults").
-    end method. 
-    
-    @Test.
-    method public void TestGetOrders():
-       executeGet("orders").
-    end method. 
-    
-    @Test.
-    method public void TestGetOrderLines():
-       executeGet("orderLines").
-    end method.
-    
-    
-    @Test.
-    method public void TestGetPurchaseOrders():
-       executeGet("purchaseorders").
-    end method. 
-    
-    @Test.
-    method public void TestGetRefcalls():
-       executeGet("refcalls").
-    end method. 
-    
-    @Test.
-    method public void TestGetSalesreps():
-       executeGet("salesreps").
-    end method. 
-    
-    @Test.
-    method public void TestGetSalesrepQuotas():
-       executeGet("salesrepQuotas").
-    end method. 
-    
-    @Test.
-    method public void TestGetShipTos():
-       executeGet("shipTos").
-    end method. 
-    
-    @Test.
-    method public void TestGetStates():
-       executeGet("states").
-    end method. 
-    
-    @Test.
-    method public void TestGetSuppliers():
-       executeGet("suppliers").
-    end method. 
-    
-    @Test.
-    method public void TestGetTimeSheets():
-       executeGet("timesheets").
-    end method. 
-    
-    @Test.
-    method public void TestGetVacations():
-       executeGet("vacations").
-    end method. 
-    
-    @Test.
-    method public void TestGetWarehouses():
-       executeGet("warehouses").
-    end method. 
-    
-    
-    method protected void executeGet(pcResource as char):
+    method protected void executePost(pcResource as char):
+       define variable oJson as JsonObject  no-undo. 
        define variable oResponse       as IHttpResponse no-undo.
-       oResponse = RestClient:executeGetRequest(pcResource).
-       ProcessResponse("GET",pcResource,oResponse). 
+       define variable cFile           as character no-undo.
+       file-info:file-name = substitute ("data/post-&1.json",pcResource). 
+       if file-info:full-pathname > "" then 
+          oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
+       else 
+          Assert:IsTrue(false,"Post JSON exits").
+       oResponse = RestClient:executePostRequest(pcResource,oJson).
+       ProcessResponse("POST",pcResource,oResponse). 
     end method.    
     
     method protected void ProcessResponse(pcMethod as character,pcResource as character,oResponse as IHttpResponse):

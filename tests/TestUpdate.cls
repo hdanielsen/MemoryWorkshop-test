@@ -22,6 +22,7 @@ using Pmfo.Core.Service.IClientGetRequest from propath.
 using Pmfo.Core.Service.OperationHandler from propath.
 using Pmfo.Util.JsonUtil from propath.
 using Progress.Json.ObjectModel.JsonObject from propath.
+using Pmfo.Tools.Test.TestBase from propath.
 
 class TestUpdate inherits TestBase:
     

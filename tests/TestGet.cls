@@ -9,7 +9,7 @@
     Notes       : 
   ----------------------------------------------------------------------*/
 
-using Progress.Lang.*.
+
 using Pmfo.Core.BusinessLogic.IBusinessEntity from propath.
 using OpenEdge.Core.Collections.IStringStringMap from propath.
 using Pmfo.Core.Service.IClientGetRequest from propath.
@@ -17,6 +17,7 @@ using Pmfo.Core.BusinessLogic.IGetDataRequest from propath.
 using Pmfo.Core.BusinessLogic.IGetDataResponse from propath.
 using Progress.Json.ObjectModel.JsonObject from propath.
 using OpenEdge.Core.Collections.StringStringMap from propath.
+using Pmfo.Tools.Test.TestBase from propath.
 
 block-level on error undo, throw.
 

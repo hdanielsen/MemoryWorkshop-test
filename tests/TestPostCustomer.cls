@@ -17,7 +17,7 @@ class TestPostCustomer inherits TestUpdate :
     @Test.
     method public void TestDelete(  ):
         if valid-object(JsonPosted) then
-           DeleteData(JsonPosted).
+            DeleteData(JsonPosted).
         else
             Assert:isTrue(false,"Valid Json Object to Delete")   .
     end method.

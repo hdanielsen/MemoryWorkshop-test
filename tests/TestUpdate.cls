@@ -88,9 +88,7 @@ class TestUpdate inherits TestBase:
          
      
         oBe = GetBE(Resource).
-        file-info:file-name = substitute ("data/post-&1.json",Resource). 
-         
-        
+       
         oMap = new StringStringMap().
         OperationHandler:ExecuteUpdate(
                                       "DELETE",

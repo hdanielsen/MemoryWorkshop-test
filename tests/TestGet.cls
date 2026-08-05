@@ -54,11 +54,11 @@ class TestGet inherits TestBase:
         oBe = GetBE(Resource).
         
         oMap = new StringStringMap().
-        oResponse = OperationHandler:ExecuteGetOrHead("GET", 
-                                                      "http://10.0.0.198:8080/minster/web/api", 
-                                                      Resource,
-                                                      oMap,
-                                                       oBe).
+        oResponse = OperationHandler:ExecuteRead("GET", 
+                                                 "http://10.0.0.198:8080/minster/web/api", 
+                                                 Resource,
+                                                 oMap,
+                                                 oBe).
         
         oResponse:WriteFile(subst("temp/&1-get-&2.json",cPrefix,Resource),true).
         

@@ -58,13 +58,13 @@ class TestUpdate inherits TestBase:
         if not valid-object(oJson) then 
            undo, throw new ApplicationError(subst("No POST Json  found for '&1'",Resource)).
         oMap = new StringStringMap().
-        oResponse = OperationHandler:ExecutePostOrPutOrDelete(
-                                                      "POST",
-                                                      oJson,
-                                                      "http://10.0.0.198:8080/minster/web/api", 
-                                                      Resource,
-                                                      oMap,
-                                                      oBe).
+        oResponse = OperationHandler:ExecuteUpdate(
+                                              "POST",
+                                              oJson,
+                                              "http://10.0.0.198:8080/minster/web/api", 
+                                              Resource,
+                                              oMap,
+                                              oBe).
         cPrefix = substitute("&1-&2",
                              iso-date(today),
                              replace(string(time,"HH:MM"),":","")
@@ -91,13 +91,13 @@ class TestUpdate inherits TestBase:
          
         
         oMap = new StringStringMap().
-        OperationHandler:ExecutePostOrPutOrDelete(
-                                                  "DELETE",
-                                                  pJson,
-                                                  "http://10.0.0.198:8080/minster/web/api", 
-                                                  Resource,
-                                                  oMap,
-                                                  oBe).
+        OperationHandler:ExecuteUpdate(
+                                      "DELETE",
+                                      pJson,
+                                      "http://10.0.0.198:8080/minster/web/api", 
+                                      Resource,
+                                      oMap,
+                                      oBe).
          
          
         catch e as Progress.Lang.Error :

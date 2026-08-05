@@ -64,15 +64,19 @@ class TestRestClientUpdate inherits TestRestBase:
         executePost("families").
     end method. 
     
-    
     @Test.
-    method public void TestPostRefCalls():
-        executePost("refCalls").
+    method public void TestPostItems():
+        executePost("items").
     end method. 
     
     @Test.
     method public void TestPostLocalDefaults():
         executePost("localDefaults").
+    end method. 
+    
+    @Test.
+    method public void TestPostRefCalls():
+        executePost("refCalls").
     end method. 
     
     @Test.
@@ -101,14 +105,21 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
-    method public void TestDeleteRefCalls():
-        executeDelete("refCalls").
-    end method.
+    method public void TestDeleteItems():
+        executeDelete("items").
+    end method. 
     
     @Test.
     method public void TestDeleteLocalDefaults():
         executeDelete("localDefaults").
     end method. 
+    
+    @Test.
+    method public void TestDeleteRefCalls():
+        executeDelete("refCalls").
+    end method.
+    
+   
     
      
     method protected void executePost(pcResource as char):

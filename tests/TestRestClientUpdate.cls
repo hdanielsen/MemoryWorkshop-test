@@ -34,72 +34,82 @@ class TestRestClientUpdate inherits TestRestBase:
     
     @Before.
     method public void Before   (  ):  
-       deleteTempFiles("POST").
-       deleteTempFiles("DELETE").
-       RestClient = new RestClient(UriSchemeEnum:http,"localhost",8080,"/main/web/api").
+        deleteTempFiles("POST").
+        deleteTempFiles("DELETE").
+        RestClient = new RestClient(UriSchemeEnum:http,"localhost",8080,"/main/web/api").
     end method.
  
     @Test.
     method public void TestPostCustomers():
-       executePost("customers").
+        executePost("customers").
     end method. 
     
     @Test.
     method public void TestPostBenefits():
-       executePost("benefits").
+        executePost("benefits").
     end method. 
     
     @Test.
     method public void TestPostDepartments():
-       executePost("departments").
+        executePost("departments").
     end method. 
     
-     @Test.
+    @Test.
     method public void TestPostEmployees():
-       executePost("employees").
+        executePost("employees").
     end method.
     
     @Test.
     method public void TestPostFamilies():
-       executePost("families").
+        executePost("families").
     end method. 
     
     
     @Test.
     method public void TestPostRefCalls():
-       executePost("refCalls").
+        executePost("refCalls").
     end method. 
     
+    @Test.
+    method public void TestPostLocalDefaults():
+        executePost("localDefaults").
+    end method. 
     
     @Test.
     method public void TestDeleteBenefits():
         executeDelete("benefits").
     end method. 
     
-     @Test.
+    @Test.
     method public void TestDeletePostDepartments():
-       executeDelete("departments").
+        executeDelete("departments").
     end method. 
     
-     @Test.
+    @Test.
     method public void TestDeleteCustomers():
         executeDelete("customers").
     end method. 
     
     @Test.
     method public void TestDeleteEmployees():
-       executeDelete("employees").
+        executeDelete("employees").
     end method.
     
     @Test.
     method public void TestDeleteFamilies():
-       executeDelete("families").
+        executeDelete("families").
     end method. 
     
-      @Test.
+    @Test.
     method public void TestDeleteRefCalls():
-       executeDelete("refCalls").
+        executeDelete("refCalls").
     end method.
+    
+    @Test.
+    method public void TestDeleteLocalDefaults():
+        executeDelete("localDefaults").
+    end method. 
+    
      
     method protected void executePost(pcResource as char):
        define variable oJson         as JsonObject no-undo. 

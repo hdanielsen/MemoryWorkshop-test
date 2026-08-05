@@ -1,0 +1,22 @@
+{
+    "orders": [
+      {
+        "billToID": 0,
+        "carrier": "",
+        "creditCard": "American Express",
+        "custNum": 3045,
+        "instructions": "",
+        "orderDate": "2023-08-01",
+        "orderNum": 0,
+        "orderStatus": "Ordered",
+        "pO": "PO0927890999",
+        "promiseDate": "2026-08-29",
+        "salesRep": "BBB",
+        "shipDate": null,
+        "shipToID": 0,
+        "terms": "Net30",
+        "warehouseNum": 0
+      }  
+    ]
+ 
+}

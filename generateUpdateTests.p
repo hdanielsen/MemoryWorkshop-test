@@ -18,4 +18,4 @@ block-level on error undo, throw.
 define variable oTestGen as TestGenerator  no-undo.
 
 oTestGen = new TestGenerator().
-oTestGen:GenerateGet().
+oTestGen:GenerateUpdate().

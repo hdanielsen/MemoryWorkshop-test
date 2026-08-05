@@ -17,11 +17,23 @@ using OpenEdge.Net.HTTP.IHttpResponse from propath.
 using OpenEdge.Net.URI from propath.
 using Progress.Json.ObjectModel.JsonObject from propath.
 using OpenEdge.Core.Assert from propath.
+using OpenEdge.Core.Collections.IMap from propath.
+using OpenEdge.Core.Collections.Map from propath.
+using OpenEdge.Core.String from propath.
 
 block-level on error undo, throw.
 
 class TestRestBase: 
     {Pmfo/Util/filedata.i}
+    
+    define protected property JsonMap as IMap no-undo 
+         get():
+             if not valid-object(JsonMap) then
+                 JsonMap = new Map().
+             return JsonMap.    
+         end.
+         set.
+  
     define protected property RestClient as RestClient no-undo get. set.
     define protected property ErrorHandler as ErrorHandler  no-undo 
        get():
@@ -39,7 +51,7 @@ class TestRestBase:
         end.
         set.
      
-      method public void deleteTempFiles(pcMethod as char):  
+    method public void deleteTempFiles(pcMethod as char):  
         file-info:file-name = "Temp". 
         current-window:width = 300.
         if file-info:full-pathname <> ? then
@@ -53,7 +65,7 @@ class TestRestBase:
         end.
     end method.  
             
-    method protected void ProcessResponse(pcMethod as character,pcResource as character,oResponse as IHttpResponse, pUri  as URI):
+    method protected JsonObject ProcessResponse(pcMethod as character,pcResource as character,oResponse as IHttpResponse, pUri  as URI):
         define variabl oJsonObject as JsonObject no-undo.
         define variable cSuffix as character no-undo.
         define variable cprefix as character no-undo. 
@@ -62,8 +74,7 @@ class TestRestBase:
                              iso-date(today),
                              replace(string(time,"HH:MM"),":","")
                              ).
-           
-        if oResponse:StatusCode <> 200 then      
+        if oResponse:StatusCode <> 200 and oResponse:StatusCode <> 204 then      
             cSuffix = "-error".
         
         if type-of(oResponse:Entity,JsonObject) then do: 
@@ -76,15 +87,27 @@ class TestRestBase:
                                              cSuffix), 
                                   yes).   
         end.                            
-        else 
-           Assert:IsTrue(false,"Response is JSON").
+        else if oResponse:StatusCode <> 204 then
+            Assert:IsTrue(false,"Response is JSON").
                  
-        if oResponse:StatusCode <> 200 then do:    
+        if oResponse:StatusCode <> 200 and oResponse:StatusCode <> 204 then do:    
             if valid-object(oJsonObject) then do on error undo,leave:
                 ErrorHandler:DisplayError(oJsonObject,substitute("&1 &2",pcMethod,pUri:ToString())).
             end.    
-            Assert:IsTrue(oResponse:StatusCode = 200,"Response status is 200").
         end.
+        
+        // store in mao to use in delete
+        if pcMethod = "POST"  then 
+        do: 
+           if oJsonObject:Has("response") then 
+               oJsonObject = oJsonObject:GetJsonObject("response").
+            
+           JsonMap:Put(new String(pcResource), oJsonObject) . 
+            
+        end.
+        Assert:IsTrue(oResponse:StatusCode = 200 or oResponse:StatusCode = 204 ,"Response status is 200 or 204").
+        
+        return oJsonObject.
     end method.  
      
 end class.

@@ -90,6 +90,8 @@ class TestUpdate inherits TestBase:
         oBe = GetBE(Resource).
        
         oMap = new StringStringMap().
+        if pJson:Has("response") then 
+            pJson = pJson:GetJsonObject("response").
         OperationHandler:ExecuteUpdate(
                                       "DELETE",
                                       pJson,

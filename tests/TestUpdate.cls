@@ -40,15 +40,8 @@ class TestUpdate inherits TestBase:
    
     method protected JsonObject PostData(  ):  
         define variable oBe               as IBusinessEntity no-undo.
-        define variable hDataset          as handle no-undo.
-        define variable qmap              as IStringStringMap no-undo. 
-        define variable oClientGetRequest as IClientGetRequest   no-undo.
-        define variable cservice          as character no-undo.
-        define variable oGetDataRequest   as IGetDataRequest     no-undo.
-        define variable oGetDataResponse  as IGetDataResponse no-undo.
         define variable oResponse         as JsonObject no-undo.
         define variable oMap as StringStringMap no-undo.
-        define variable iTable as integer no-undo.
         define variable cprefix as character no-undo. 
         define variable oJson as JsonObject no-undo.
      
@@ -79,6 +72,40 @@ class TestUpdate inherits TestBase:
         end catch. 
     end method.
     
+    method protected void DeleteData(  ):
+        define variable oBe               as IBusinessEntity no-undo.
+        define variable oResponse         as JsonObject no-undo.
+        define variable oMap as StringStringMap no-undo.
+        define variable cprefix as character no-undo. 
+        define variable oJson as JsonObject no-undo.
+     
+        oBe = GetBE(Resource).
+        file-info:file-name = substitute ("data/delete-&1.json",Resource). 
+        if file-info:full-pathname > "" then 
+           oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
+        if not valid-object(oJson) then 
+            undo, throw new ApplicationError(subst("No DELETE Json found for '&1'",Resource)).
+        oMap = new StringStringMap().
+        oResponse = OperationHandler:ExecuteUpdate(
+                                              "DELETE",
+                                              oJson,
+                                              "http://10.0.0.198:8080/minster/web/api", 
+                                              Resource,
+                                              oMap,
+                                              oBe).
+        if valid-object(oResponse) then do:                                      
+            cPrefix = substitute("&1-&2",
+                                 iso-date(today),
+                                 replace(string(time,"HH:MM"),":","")
+                                 ).
+            oResponse:WriteFile(subst("temp/&1-deleted-&2.json",cPrefix,Resource),true).
+        
+        end.
+        catch e as Progress.Lang.Error :
+           Showerrorsinwindow = true.
+           HandleError(e).    
+        end catch. 
+    end method. 
     
     method protected void DeleteData( pJson as JsonObject ):  
         define variable oBe               as IBusinessEntity no-undo.

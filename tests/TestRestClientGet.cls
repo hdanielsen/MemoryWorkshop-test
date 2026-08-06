@@ -15,7 +15,7 @@ using OpenEdge.Net.HTTP.IHttpResponse from propath.
 using OpenEdge.Net.UriSchemeEnum from propath.
 using Pmfo.Util.RestClient from propath.
 
-class TestRestClient inherits TestRestBase:
+class TestRestClientGet inherits TestRestBase:
    
     /*------------------------------------------------------------------------------
      Purpose:
@@ -99,10 +99,14 @@ class TestRestClient inherits TestRestBase:
        executeGet("orderLines").
     end method.
     
-    
     @Test.
     method public void TestGetPurchaseOrders():
        executeGet("purchaseorders").
+    end method. 
+    
+    @Test.
+    method public void TestGetPurchaseOrderLines():
+       executeGet("purchaseorderlines").
     end method. 
     
     @Test.

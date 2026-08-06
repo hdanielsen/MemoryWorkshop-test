@@ -40,13 +40,13 @@ class TestRestClientUpdate inherits TestRestBase:
     end method.
  
     @Test.
-    method public void TestPostCustomers():
-        executePost("customers").
-    end method. 
-    
-    @Test.
     method public void TestPostBenefits():
         executePost("benefits").
+    end method. 
+ 
+    @Test.
+    method public void TestPostCustomers():
+        executePost("customers").
     end method. 
     
     @Test.
@@ -75,6 +75,16 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
+    method public void TestPostOrders():
+        executePost("orders").
+    end method.
+    
+    @Test.
+    method public void TestPostPurchaseOrders():
+        executePost("purchaseOrders").
+    end method.
+    
+    @Test.
     method public void TestPostRefCalls():
         executePost("refCalls").
     end method. 
@@ -82,16 +92,16 @@ class TestRestClientUpdate inherits TestRestBase:
     @Test.
     method public void TestDeleteBenefits():
         executeDelete("benefits").
-    end method. 
-    
-    @Test.
-    method public void TestDeletePostDepartments():
-        executeDelete("departments").
-    end method. 
+    end method.  
     
     @Test.
     method public void TestDeleteCustomers():
         executeDelete("customers").
+    end method. 
+    
+    @Test.
+    method public void TestDeleteDepartments():
+        executeDelete("departments").
     end method. 
     
     @Test.
@@ -115,12 +125,19 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
+    method public void TestDeleteOrders():
+        executeDelete("orders").
+    end method.
+    
+    @Test.
+    method public void TestDeletePurchaseOrders():
+        executeDelete("purchaseOrders").
+    end method.
+    
+    @Test.
     method public void TestDeleteRefCalls():
         executeDelete("refCalls").
     end method.
-    
-   
-    
      
     method protected void executePost(pcResource as char):
        define variable oJson         as JsonObject no-undo. 

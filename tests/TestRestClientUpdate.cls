@@ -43,6 +43,11 @@ class TestRestClientUpdate inherits TestRestBase:
     method public void TestPostBenefits():
         executePost("benefits").
     end method. 
+    
+    @Test.
+    method public void TestPostBins():
+        executePost("bins").
+    end method. 
  
     @Test.
     method public void TestPostCustomers():
@@ -93,6 +98,11 @@ class TestRestClientUpdate inherits TestRestBase:
     method public void TestDeleteBenefits():
         executeDelete("benefits").
     end method.  
+    
+    @Test.
+    method public void TestDeleteBins():
+        executeDelete("bins").
+    end method.
     
     @Test.
     method public void TestDeleteCustomers():

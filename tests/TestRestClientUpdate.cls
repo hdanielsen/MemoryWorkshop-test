@@ -80,6 +80,11 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
+    method public void TestPostInvoices():
+        executePost("invoices").
+    end method.
+    
+    @Test.
     method public void TestPostOrders():
         executePost("orders").
     end method.
@@ -137,6 +142,11 @@ class TestRestClientUpdate inherits TestRestBase:
     @Test.
     method public void TestDeleteOrders():
         executeDelete("orders").
+    end method.
+    
+    @Test.
+    method public void TestDeleteInvoices():
+        executeDelete("invoices").
     end method.
     
     @Test.

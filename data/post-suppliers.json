@@ -1,0 +1,20 @@
+{
+    "suppliers": [
+      {
+        "address": "333 North Street",
+        "address2": "-",
+        "city": "Boston",
+        "comments": "Ship all products 2nd Day Air.",
+        "country": "USA",
+        "discount": 47,
+        "loginDate": "2024-03-26",
+        "name": "Golf Eldorado",
+        "password": "demo",
+        "phone": "(617) 321-0187",
+        "postalCode": "02114",
+        "shipAmount": 100,
+        "state": "MA",
+        "supplierIDNum": 1
+      } 
+    ]
+}

@@ -40,124 +40,134 @@ class TestRestClientUpdate inherits TestRestBase:
     end method.
  
     @Test.
-    method public void TestPostBenefits():
+    method public void PostBenefits():
         executePost("benefits").
     end method. 
     
     @Test.
-    method public void TestPostBins():
+    method public void PostBins():
         executePost("bins").
     end method. 
  
     @Test.
-    method public void TestPostCustomers():
+    method public void PostCustomers():
         executePost("customers").
     end method. 
     
     @Test.
-    method public void TestPostDepartments():
+    method public void PostDepartments():
         executePost("departments").
     end method. 
     
     @Test.
-    method public void TestPostEmployees():
+    method public void PostEmployees():
         executePost("employees").
     end method.
     
     @Test.
-    method public void TestPostFamilies():
+    method public void PostFamilies():
         executePost("families").
     end method. 
     
     @Test.
-    method public void TestPostItems():
+    method public void PostItems():
         executePost("items").
     end method. 
     
     @Test.
-    method public void TestPostLocalDefaults():
+    method public void PostLocalDefaults():
         executePost("localDefaults").
     end method. 
     
     @Test.
-    method public void TestPostInvoices():
+    method public void PostInvoices():
         executePost("invoices").
     end method.
     
     @Test.
-    method public void TestPostOrders():
+    method public void PostOrders():
         executePost("orders").
     end method.
     
     @Test.
-    method public void TestPostPurchaseOrders():
+    method public void PostPurchaseOrders():
         executePost("purchaseOrders").
     end method.
     
     @Test.
-    method public void TestPostRefCalls():
+    method public void PostRefCalls():
         executePost("refCalls").
     end method. 
     
     @Test.
-    method public void TestDeleteBenefits():
+    method public void PostSuppliers():
+        executePost("suppliers").
+    end method. 
+   
+    @Test.
+    method public void DeleteBenefits():
         executeDelete("benefits").
     end method.  
     
     @Test.
-    method public void TestDeleteBins():
+    method public void DeleteBins():
         executeDelete("bins").
     end method.
     
     @Test.
-    method public void TestDeleteCustomers():
+    method public void DeleteCustomers():
         executeDelete("customers").
     end method. 
     
     @Test.
-    method public void TestDeleteDepartments():
+    method public void DeleteDepartments():
         executeDelete("departments").
     end method. 
     
     @Test.
-    method public void TestDeleteEmployees():
+    method public void DeleteEmployees():
         executeDelete("employees").
     end method.
     
     @Test.
-    method public void TestDeleteFamilies():
+    method public void DeleteFamilies():
         executeDelete("families").
     end method. 
     
     @Test.
-    method public void TestDeleteItems():
+    method public void DeleteItems():
         executeDelete("items").
     end method. 
     
     @Test.
-    method public void TestDeleteLocalDefaults():
+    method public void DeleteLocalDefaults():
         executeDelete("localDefaults").
     end method. 
     
     @Test.
-    method public void TestDeleteOrders():
+    method public void DeleteOrders():
         executeDelete("orders").
     end method.
     
     @Test.
-    method public void TestDeleteInvoices():
+    method public void DeleteInvoices():
         executeDelete("invoices").
     end method.
     
     @Test.
-    method public void TestDeletePurchaseOrders():
+    method public void DeletePurchaseOrders():
         executeDelete("purchaseOrders").
     end method.
     
     @Test.
-    method public void TestDeleteRefCalls():
+    method public void DeleteRefCalls():
         executeDelete("refCalls").
     end method.
+    
+    @Test.
+    method public void DeleteSuppliers():
+        executeDelete("suppliers").
+    end method. 
      
     method protected void executePost(pcResource as char):
        define variable oJson         as JsonObject no-undo. 

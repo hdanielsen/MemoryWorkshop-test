@@ -100,6 +100,11 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
+    method public void PostSalesresp():
+        executePost("salesreps").
+    end method. 
+    
+    @Test.
     method public void PostSuppliers():
         executePost("suppliers").
     end method. 
@@ -163,6 +168,11 @@ class TestRestClientUpdate inherits TestRestBase:
     method public void DeleteRefCalls():
         executeDelete("refCalls").
     end method.
+    
+    @Test.
+    method public void DeleteSalesresp():
+        executeDelete("salesreps").
+    end method. 
     
     @Test.
     method public void DeleteSuppliers():

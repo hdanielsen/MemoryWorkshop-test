@@ -105,10 +105,30 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
+    method public void PostShipTos():
+        executePost("shiptos").
+    end method. 
+    
+    @Test.
     method public void PostSuppliers():
         executePost("suppliers").
     end method. 
-   
+    
+    @Test.
+    method public void PostTimeSheets():
+        executePost("timesheets").
+    end method.   
+    
+    @Test.
+    method public void PostWarehouses():
+        executePost("warehouses").
+    end method. 
+    
+    @Test.
+    method public void PostVacations():
+        executePost("vacations").
+    end method. 
+    
     @Test.
     method public void DeleteBenefits():
         executeDelete("benefits").
@@ -175,8 +195,28 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
     
     @Test.
+    method public void DeleteShipTos():
+        executeDelete("shiptos").
+    end method. 
+    
+    @Test.
     method public void DeleteSuppliers():
         executeDelete("suppliers").
+    end method. 
+        
+    @Test.
+    method public void DeleteVacations():
+        executeDelete("vacations").
+    end method. 
+    
+    @Test.
+    method public void DeleteTimeSheets():
+        executeDelete("timesheets").
+    end method.   
+    
+    @Test.
+    method public void DeleteWarehouses():
+        executeDelete("warehouses").
     end method. 
      
     method protected void executePost(pcResource as char):
@@ -186,9 +226,9 @@ class TestRestClientUpdate inherits TestRestBase:
         define variable cFile     as character no-undo.
         file-info:file-name = substitute ("data/post-&1.json",pcResource). 
         if file-info:full-pathname > "" then 
-           oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
+            oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
         else 
-           Assert:IsTrue(false,"Post JSON exists").
+            Assert:IsTrue(false,"Post JSON exists").
         oResponse = RestClient:executePostRequest(pcResource,oJson).
       
         ProcessResponse("POST",pcResource,oResponse,RestClient:uri). 

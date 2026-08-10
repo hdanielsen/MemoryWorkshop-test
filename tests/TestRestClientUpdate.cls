@@ -180,53 +180,50 @@ class TestRestClientUpdate inherits TestRestBase:
     end method. 
      
     method protected void executePost(pcResource as char):
-       define variable oJson         as JsonObject no-undo. 
-       define variable oResponseJson as JsonObject no-undo. 
-       define variable oResponseArray as JsonArray no-undo. 
-       define variable oResponse as IHttpResponse no-undo.
-       define variable cFile     as character no-undo.
-       file-info:file-name = substitute ("data/post-&1.json",pcResource). 
-       if file-info:full-pathname > "" then 
-          oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
-       else 
-          Assert:IsTrue(false,"Post JSON exists").
-       oResponse = RestClient:executePostRequest(pcResource,oJson).
+        define variable oJson         as JsonObject no-undo. 
+        
+        define variable oResponse as IHttpResponse no-undo.
+        define variable cFile     as character no-undo.
+        file-info:file-name = substitute ("data/post-&1.json",pcResource). 
+        if file-info:full-pathname > "" then 
+           oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
+        else 
+           Assert:IsTrue(false,"Post JSON exists").
+        oResponse = RestClient:executePostRequest(pcResource,oJson).
       
-       oResponseJson = ProcessResponse("POST",pcResource,oResponse,RestClient:uri). 
-       
-      
+        ProcessResponse("POST",pcResource,oResponse,RestClient:uri). 
+        
     end method.  
     
     method protected void executeDelete(pcResource as character):
-       define variable oResponse as IHttpResponse no-undo.
-       define variable oObject as Object no-undo. 
+        define variable oResponse as IHttpResponse no-undo.
+        define variable oObject as Object no-undo. 
        
-       oObject = JsonMap:Get(new String(pcResource)) .
+        oObject = JsonMap:Get(new String(pcResource)) .
        
-       if type-of(oObject,JsonObject) then do:
-          oResponse = RestClient:executeDeleteRequest(pcResource,cast(oObject,JsonObject) ).
+        if type-of(oObject,JsonObject) then do:
+           oResponse = RestClient:executeDeleteRequest(pcResource,cast(oObject,JsonObject) ).
       
-          ProcessResponse("DELETE",pcResource,oResponse,RestClient:uri). 
-       end.
-       else 
-          Assert:IsTrue(false,"JSON for delete exists"). 
+           ProcessResponse("DELETE",pcResource,oResponse,RestClient:uri). 
+        end.
+        else 
+           Assert:IsTrue(false,"JSON for delete exists"). 
     end method.      
     
     
-     method protected void executeDeleteFromData(pcResource as character):
-       define variable oResponse as IHttpResponse no-undo.
-       define variable oJson         as JsonObject no-undo. 
-       define variable cFile     as character no-undo.
-       file-info:file-name = substitute ("data/delete-&1.json",pcResource). 
-       if file-info:full-pathname > "" then 
-          oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
-       else 
-          Assert:IsTrue(false,"Delete JSON exists").
+    method protected void executeDeleteFromData(pcResource as character):
+        define variable oResponse as IHttpResponse no-undo.
+        define variable oJson         as JsonObject no-undo. 
+        define variable cFile     as character no-undo.
+        file-info:file-name = substitute ("data/delete-&1.json",pcResource). 
+        if file-info:full-pathname > "" then 
+            oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
+        else 
+            Assert:IsTrue(false,"Delete JSON exists").
        
-        
-          oResponse = RestClient:executeDeleteRequest(pcResource,oJson).
+        oResponse = RestClient:executeDeleteRequest(pcResource,oJson).
       
-          ProcessResponse("DELETE",pcResource,oResponse,RestClient:uri). 
-       . 
+        ProcessResponse("DELETE",pcResource,oResponse,RestClient:uri). 
+         
     end method.           
 end class.

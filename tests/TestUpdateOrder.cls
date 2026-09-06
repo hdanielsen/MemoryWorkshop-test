@@ -2,6 +2,8 @@ block-level on error undo, throw.
 
 using Progress.Json.ObjectModel.JsonObject from propath.
 using OpenEdge.Core.Assert from propath.
+using Progress.Profiler.MemoryProfiler from propath.
+
 class TestUpdateOrder inherits TestUpdate:
 
     define variable JsonPosted as JsonObject no-undo.
@@ -9,11 +11,23 @@ class TestUpdateOrder inherits TestUpdate:
     constructor public TestUpdateOrder( ):
         super("orders").
     end constructor.
-
+    
+    @Test.
+    method public void SnapShotBeforePost():
+        MemoryProfiler:TakeSnapShot("beforePost").
+    end method.     
+       
+    
     @Test.
     method public void TestPost(  ):
         JsonPosted = PostData().
     end method.
+
+    @Test.
+    method public void SnapShotAfterPost():
+        MemoryProfiler:TakeSnapShot("AfterPost").
+    end method.     
+    
 
     @Test.
     method public void TestDelete(  ):
@@ -22,5 +36,11 @@ class TestUpdateOrder inherits TestUpdate:
         else
             Assert:isTrue(false,"Valid Json Object to Delete").
     end method.
-
+    
+    @Test.
+    method public void SnapShotAfterDelete():
+        MemoryProfiler:TakeSnapShot("afterDelete").
+    end method.     
+    
+    
 end class.

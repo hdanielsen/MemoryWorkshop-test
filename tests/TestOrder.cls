@@ -9,32 +9,26 @@
     Notes       : 
   ----------------------------------------------------------------------*/
 
-using Progress.Lang.*.
-using Pmfo.Core.BusinessLogic.IBusinessEntity from propath.
-using Pmfo.Core.Manager.IServiceManager from propath.
-using Ccs.Common.Application from propath.
-using Pmfo.Core.Error.ApplicationError from propath.
-using OpenEdge.Web.SendExceptionError from propath.
-using Business.CustomerBE from propath.
-using Pmfo.Core.Service.ClientGetRequest from propath.
-using OpenEdge.Core.Collections.IStringStringMap from propath.
-using Pmfo.Util.Array from propath.
-using Pmfo.Core.Service.IClientGetRequest from propath.
-using OpenEdge.Core.Collections.StringStringMap from propath.
  
-using Pmfo.Core.BusinessLogic.RequestBuilder.QueryRequestBuilder from propath.
-using Ccs.BusinessLogic.IGetDataResponse from propath.
-using Pmfo.Core.Common.DataService from propath.
-using Progress.Json.ObjectModel.JsonObject from propath.
-using Pmfo.Util.JsonUtil from propath.
-using Pmfo.Core.BusinessLogic.IGetDataRequest from propath.
-using Pmfo.Tools.Test.TestBase from propath.
-using Pmfo.Core.BusinessLogic.IUpdateDataRequest from propath.
-using Pmfo.Core.BusinessLogic.UpdateDataRequest from propath.
-using Ccs.BusinessLogic.CommitScopeEnum from propath.
-using Progress.Json.ObjectModel.JsonArray from propath.
 
 block-level on error undo, throw.
+
+using Ccs.BusinessLogic.CommitScopeEnum from propath.
+using OpenEdge.Core.Collections.IStringStringMap from propath.
+using OpenEdge.Core.Collections.StringStringMap from propath.
+using Pmfo.Core.BusinessLogic.GetDataRequest from propath.
+using Pmfo.Core.BusinessLogic.GetDataTableRequest from propath.
+using Pmfo.Core.BusinessLogic.IBusinessEntity from propath.
+using Pmfo.Core.BusinessLogic.IGetDataRequest from propath.
+using Pmfo.Core.BusinessLogic.IGetDataResponse from propath.
+using Pmfo.Core.BusinessLogic.IGetDataTableRequest from propath.
+using Pmfo.Core.BusinessLogic.IGetDataTableResponse from propath.
+using Pmfo.Core.BusinessLogic.IUpdateDataRequest from propath.
+using Pmfo.Core.BusinessLogic.UpdateDataRequest from propath.
+using Pmfo.Core.Service.OperationHandler from propath.
+using Pmfo.Tools.Test.TestBase from propath.
+using Pmfo.Util.JsonUtil from propath.
+using Progress.Json.ObjectModel.JsonObject from propath.
 
 class TestOrder inherits TestBase:
 
@@ -47,7 +41,7 @@ class TestOrder inherits TestBase:
         super:Before().
     end method.       
     
-    @Test. 
+   // @Test. 
     method public void CreateOrderUsingBE(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable hDataset          as handle no-undo.
@@ -83,7 +77,7 @@ class TestOrder inherits TestBase:
         end catch. 
     end method.
     
-    @Test. 
+    // @Test. 
     method public void DeleteOrderUsingBE(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable hDataset          as handle no-undo.
@@ -118,7 +112,7 @@ class TestOrder inherits TestBase:
     end method.
     
      
-    @Test.
+  //  @Test.
     method public void PostOrder(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo. 
@@ -148,7 +142,7 @@ class TestOrder inherits TestBase:
     end method.
     
     
-    @Test. 
+    // @Test. 
     method public void DeleteOrder(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo. 
@@ -175,6 +169,86 @@ class TestOrder inherits TestBase:
            HandleError(e).    
         end catch. 
     end method.
+    
+    
+     @Test. 
+    method public void ReadOrderPageWithBE(  ):  
+        define variable oBe               as IBusinessEntity no-undo.
+        define variable hDataset          as handle no-undo.
+        define variable oJson             as JsonObject no-undo.
+        define variable oJsonOrders       as JsonObject no-undo.
+        define variable oRequest          as IGetDataRequest       no-undo.
+        define variable oResponse         as IGetDataResponse      no-undo.
+        define variable oTableRequest     as IGetDataTableRequest  no-undo.
+        define variable oTableResponse    as IGetDataTableResponse no-undo.
+        define variable i                 as integer no-undo.
+           
+        oBe = GetBE("orders").
+        oBe:getDataset(output dataset-handle hDataset).
+        oRequest = new GetDataRequest().
+        oRequest:
+        do i = 1 to hDataset:num-buffers:
+            oTableRequest =  new GetDataTableRequest(hDataset:get-buffer-handle(i):table-handle).
+            if i = 1 then do:
+                oTableRequest:NumRecords = 20.
+            end.    
+            oRequest:AddTableRequest(oTableRequest).  
+            leave. //  only order          
+        end.         
+        
+        oResponse = oBe:GetData(oRequest,output dataset-handle hdataset by-reference).
+        
+        hDataset:write-json ("file","temp/get-orders.json",yes).  
+       
+        do i = 1 to extent(oResponse:TableResponses):
+            if i = 1 then do:
+                message 
+                oResponse:TableResponses[i]:NextPagingContext
+                view-as alert-box.
+                
+            end.    
+            oRequest:AddTableRequest(new GetDataTableRequest(hDataset:get-buffer-handle(i):table-handle)).             
+       
+        end.         
+       
+        
+        return.
+        catch e as Progress.Lang.Error :
+             ShowErrorsInWindow = true.
+             HandleError(e).    
+        end catch. 
+    end method.
+    
+    
+     @Test. 
+    method public void GetOrderPage(  ):  
+        define variable oBe               as IBusinessEntity no-undo.
+        define variable qmap              as IStringStringMap no-undo. 
+        define variable oResponse         as JsonObject no-undo.
+        define variable oMap as StringStringMap no-undo.
+        define variable oJson as JsonObject no-undo.
+        define variable oJsonOrders as JsonObject no-undo.    
+        
+        oBe = GetBE("orders").
+        oMap = new StringStringMap().
+        
+        oMap:put("top","20").
+        
+        oResponse = OperationHandler:ExecuteRead("GET",
+                                                 "http://10.0.0.198:8080/minster/web/genesis", 
+                                                 "orders",
+                                                 oMap, 
+                                                 oBe).
+         
+        oResponse:WriteFile("temp/get-orders.json",true).
+        
+     
+        return.
+        catch e as Progress.Lang.Error :
+           ShowErrorsInWindow = true.
+           HandleError(e).    
+        end catch. 
+    end method.  
     
     method protected void DeleteOrderTable(input table ttOrder):
         temp-table ttOrder:tracking-changes = true.

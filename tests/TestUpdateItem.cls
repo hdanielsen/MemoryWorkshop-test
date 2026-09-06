@@ -9,7 +9,7 @@ class TestUpdateItem inherits TestUpdate:
     constructor public TestUpdateItem( ):
         super("items").
     end constructor.
-
+    
     @Test.
     method public void TestPost(  ):
         JsonPosted = PostData().

@@ -1,6 +1,6 @@
  
  /*------------------------------------------------------------------------
-    File        : TestCustomer
+    File        : TestAddress
     Purpose     : 
     Syntax      : 
     Description : 
@@ -41,14 +41,15 @@ class TestAddress inherits TestBase:
         super:Before().
     end method.       
     
-   //  @Test.
+    @Test.
     method public void SnapShotBeforeBE():        
         MemoryProfiler:TakeSnapShot("BeforeAddress").
+        pause 1.
     end method.     
      
     
-  //  @Test. 
-    method public void ReadAddress(  ):  
+    @Test. 
+    method public void ReadAddressWithBE(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable hDataset          as handle no-undo.
         define variable oJson             as JsonObject no-undo.
@@ -76,7 +77,9 @@ class TestAddress inherits TestBase:
         end.         
         
         oResponse = oBe:GetData(oRequest,output dataset-handle hdataset by-reference).
-        
+    
+        MemoryProfiler:TakeSnapShot("ActiveBe").
+    
         hDataset:write-json ("file","temp/read-address.json",yes).  
        
         
@@ -87,7 +90,7 @@ class TestAddress inherits TestBase:
         end catch. 
     end method.
     
-    @Test. 
+   // @Test. 
     method public void GetAddressService(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo. 
@@ -118,7 +121,7 @@ class TestAddress inherits TestBase:
     
     @Test.
     method public void SnapShotAfter():
-        
+        pause 1.
         MemoryProfiler:TakeSnapShot("afterGetAddress").
     end method.     
      

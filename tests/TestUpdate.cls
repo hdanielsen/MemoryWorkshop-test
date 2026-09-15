@@ -26,7 +26,9 @@ using Pmfo.Tools.Test.TestBase from propath.
 
 class TestUpdate inherits TestBase:
     
-    define public property Resource  as character no-undo  get. protected set.
+    define public    property Resource           as character no-undo  get. protected set.
+    define protected property AddDateToFileName  as logical   no-undo  get. protected set.
+  
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
@@ -59,11 +61,12 @@ class TestUpdate inherits TestBase:
                                               Resource,
                                               oMap,
                                               oBe).
-        cPrefix = substitute("&1-&2",
-                             iso-date(today),
-                             replace(string(time,"HH:MM"),":","")
-                             ).
-        oResponse:WriteFile(subst("temp/&1-posted-&2.json",cPrefix,Resource),true).
+        if AddDateToFileName then                                      
+            cPrefix = substitute("&1-&2-",
+                                 iso-date(today),
+                                 replace(string(time,"HH:MM"),":","")
+                                 ).
+        oResponse:WriteFile(subst("temp/&1posted-&2.json",cPrefix,Resource),true).
         
         return oResponse.
         catch e as Progress.Lang.Error :

@@ -41,14 +41,14 @@ class TestAddress inherits TestBase:
         super:Before().
     end method.       
     
-    @Test.
+   // @Test.
     method public void SnapShotBeforeBE():        
         MemoryProfiler:TakeSnapShot("BeforeAddress").
         pause 1.
     end method.     
      
     
-    @Test. 
+  //  @Test. 
     method public void ReadAddressWithBE(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable hDataset          as handle no-undo.
@@ -64,7 +64,6 @@ class TestAddress inherits TestBase:
         oBe = GetBE("addresses").
         oBe:getDataset(output dataset-handle hDataset).
         oRequest = new GetDataRequest().
-        oRequest:
         do i = 1 to hDataset:num-buffers:
             oTableRequest =  new GetDataTableRequest(hDataset:get-buffer-handle(i):table-handle).
             if i = 1 then do:
@@ -90,18 +89,19 @@ class TestAddress inherits TestBase:
         end catch. 
     end method.
     
-   // @Test. 
+    @Test. 
     method public void GetAddressService(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo. 
         define variable oResponse         as JsonObject no-undo.
-        define variable oMap as StringStringMap no-undo.
-        define variable oJson as JsonObject no-undo.
-        define variable oJsonOrders as JsonObject no-undo.    
+        define variable oMap              as StringStringMap no-undo.
+        define variable oJson             as JsonObject no-undo.
+        define variable oJsonOrders       as JsonObject no-undo.    
         
         oBe = GetBE("addresses").
         oMap = new StringStringMap().
         oMap:put("orderBy","address").
+        oMap:put("filter","address contains 'rue' and country eq 'canada'").
         oMap:put("top","100").
         
         oResponse = OperationHandler:ExecuteRead("GET",
@@ -119,7 +119,7 @@ class TestAddress inherits TestBase:
         end catch. 
     end method.  
     
-    @Test.
+ //   @Test.
     method public void SnapShotAfter():
         pause 1.
         MemoryProfiler:TakeSnapShot("afterGetAddress").

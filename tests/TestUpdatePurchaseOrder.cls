@@ -38,5 +38,10 @@ class TestUpdatePurchaseOrder inherits TestUpdate:
         MemoryProfiler:TakeSnapShot("AfterUpdatePO").
     end method.     
        
+
+    @After. // delete json in case profiler is used
+    method public void testAfter(  ):  
+        delete object JsonPosted no-error. 
+    end method.    
    
 end class.

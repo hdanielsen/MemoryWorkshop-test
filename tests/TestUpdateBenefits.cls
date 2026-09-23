@@ -22,5 +22,11 @@ class TestUpdateBenefits inherits TestUpdate:
         else
             Assert:isTrue(false,"Valid Json Object to Delete").
     end method.
+    
+    @After. // delete json in case profiler is used
+    method public void testAfter(  ):  
+        delete object JsonPosted no-error. 
+    end method.    
+    
 
 end class.

@@ -93,13 +93,7 @@ class TestCustomer inherits TestBase:
         end catch. 
     end method.
     
-    
-  //  @Test.
-    method public void SnapShotBefore():
-     //   MemoryProfiler:TakeSnapShot("beforeGet").
-        
-    end method.     
-       
+   
    // @Test. 
     method public void GetCustomerPage(  ):  
         define variable oBe               as IBusinessEntity no-undo.
@@ -219,8 +213,14 @@ class TestCustomer inherits TestBase:
            HandleError(e).    
         end catch. 
     end method.  
+   
+     @Test.
+    method public void SnapShotBefore():
+        MemoryProfiler:TakeSnapShot("BeforeGet").
+    end method.     
+   
     
-     @Test. 
+    @Test. 
     method public void GetCustomerExpandOrders(  ):  
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo. 
@@ -228,12 +228,12 @@ class TestCustomer inherits TestBase:
         define variable oMap as StringStringMap no-undo.
         define variable oJson as JsonObject no-undo.
         define variable oJsonOrders as JsonObject no-undo.    
-        
+        file-info:file-name = ".".
         oBe = GetBE("customers").
         oMap = new StringStringMap().
         
       //  oMap:put("top","10").
-        oMap:put("expand","orders,invoices").
+        oMap:put("expand","orders/orderlines,invoices").
         
         oResponse = OperationHandler:ExecuteRead("GET",
                                                  "http://10.0.0.198:8080/minster/web/api/", 
@@ -242,6 +242,7 @@ class TestCustomer inherits TestBase:
                                                  oBe).
          
         oResponse:WriteFile("temp/get-customers-orders-invoices.json",true).
+        MemoryProfiler:TakeSnapShot("ActiveCustomer").
         return.
         catch e as Progress.Lang.Error :
            ShowErrorsInWindow = false.
@@ -250,9 +251,10 @@ class TestCustomer inherits TestBase:
     end method.  
     
     
-   // @Test.
+    @Test.
     method public void SnapShotAfter():
-    //    MemoryProfiler:TakeSnapShot("afterGet").
+        pause 0.5.
+        MemoryProfiler:TakeSnapShot("afterGet").
     end method.     
      
     

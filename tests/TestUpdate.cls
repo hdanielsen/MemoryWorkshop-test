@@ -48,11 +48,7 @@ class TestUpdate inherits TestBase:
         define variable oJson as JsonObject no-undo.
      
         oBe = GetBE(Resource).
-        file-info:file-name = substitute ("data/post-&1.json",Resource). 
-        if file-info:full-pathname > "" then 
-           oJson = JsonUtil:ReadJsonFile( file-info:full-pathname).
-        if not valid-object(oJson) then 
-           undo, throw new ApplicationError(subst("No POST Json  found for '&1'",Resource)).
+        oJson = LoadJson(substitute ("data/post-&1.json",Resource)). 
         oMap = new StringStringMap().
         oResponse = OperationHandler:ExecuteUpdate(
                                               "POST",

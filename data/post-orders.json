@@ -12,14 +12,13 @@
         "pO": "PO0927890999",
         "promiseDate": "2026-08-29",
         "salesRep": "BBB",
-        "shipDate": null,
+        "shipDate": "2026-09-29",
         "shipToID": 0,
         "terms": "Net30",
         "warehouseNum": 0,
         "orderLines": [
           {
             "discount": 10,
-            "extendedPrice": 131.22,
             "itemNum": 54,
             "lineNum": 1,
             "orderLineStatus": "Shipped",
@@ -28,7 +27,6 @@
           },
           {
             "discount": 10,
-            "extendedPrice": 450.77,
             "itemNum": 55,
             "lineNum": 2,
             "orderLineStatus": "Shipped",
@@ -37,7 +35,6 @@
           },
           {
             "discount": 10,
-            "extendedPrice": 631.44,
             "itemNum": 53,
             "lineNum": 3,
             "orderLineStatus": "Shipped",
@@ -46,7 +43,6 @@
           },
           {
             "discount": 10,
-            "extendedPrice": 828.0,
             "itemNum": 28,
             "lineNum": 4,
             "orderLineStatus": "Shipped",
@@ -55,7 +51,6 @@
           },
           {
             "discount": 10,
-            "extendedPrice": 2295.0,
             "itemNum": 39,
             "lineNum": 5,
             "orderLineStatus": "Shipped",
@@ -64,7 +59,6 @@
           },
           {
             "discount": 10,
-            "extendedPrice": 134.73,
             "itemNum": 26,
             "lineNum": 6,
             "orderLineStatus": "Shipped",

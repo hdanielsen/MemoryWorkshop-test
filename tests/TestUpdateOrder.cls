@@ -1,40 +1,26 @@
- 
- /*------------------------------------------------------------------------
-    File        : TestCustomer
-    Purpose     : 
-    Syntax      : 
-    Description : 
-    Author(s)   : hdaniels
-    Created     : Mon Apr 15 11:46:50 EDT 2019
-    Notes       : 
+  /*------------------------------------------------------------------------
+    File        : TestUpdateOrder 
+    Purpose     : Unit test for update of order data          
   ----------------------------------------------------------------------*/
 
- 
 
 block-level on error undo, throw.
 
-using Ccs.BusinessLogic.CommitScopeEnum from propath.
+using OpenEdge.Core.AssertionFailedError from propath.
 using OpenEdge.Core.Collections.IStringStringMap from propath.
 using OpenEdge.Core.Collections.StringStringMap from propath.
-using Pmfo.Core.BusinessLogic.GetDataRequest from propath.
-using Pmfo.Core.BusinessLogic.GetDataTableRequest from propath.
 using Pmfo.Core.BusinessLogic.IBusinessEntity from propath.
-using Pmfo.Core.BusinessLogic.IGetDataRequest from propath.
-using Pmfo.Core.BusinessLogic.IGetDataResponse from propath.
-using Pmfo.Core.BusinessLogic.IGetDataTableRequest from propath.
-using Pmfo.Core.BusinessLogic.IGetDataTableResponse from propath.
 using Pmfo.Core.BusinessLogic.IUpdateDataRequest from propath.
 using Pmfo.Core.BusinessLogic.UpdateDataRequest from propath.
 using Pmfo.Core.Service.OperationHandler from propath.
 using Pmfo.Tools.Test.TestBase from propath.
+using Pmfo.Util.DatasetUtil from propath.
 using Pmfo.Util.JsonUtil from propath.
 using Progress.Json.ObjectModel.JsonObject from propath.
-using Pmfo.Util.DatasetUtil from propath.
-using OpenEdge.Core.AssertionFailedError from propath.
 
 class TestUpdateOrder inherits TestBase:
 
-    define protected property Resource              as character no-undo init "orders" get.       
+    define protected property Resource as character no-undo init "orders" get.       
       
     @Before.
     method public override void Before():
@@ -87,7 +73,7 @@ class TestUpdateOrder inherits TestBase:
         define variable oJson             as JsonObject no-undo.
         define variable oJsonPosted       as JsonObject no-undo.
         
-        oBe = GetBE("orders").
+        oBe = GetBE(Resource).
         ShowErrorsInWindow = true.
         oMap = new StringStringMap().
         
@@ -186,9 +172,9 @@ class TestUpdateOrder inherits TestBase:
        
         // load the last posted json for this BE 
         oJson = LoadJson(substitute("temp/posted-be-&1.json",Resource)).
+        hDataset:read-json ("JsonObject",ojson). 
         // mark all rows as row-deleted (delete with tracking-changes) 
         DeleteDataAndTrack(hDataset).
-        hDataset:read-json ("JsonObject",ojson). 
         
         oUpdateRequest = new UpdateDataRequest(cMainRequestBuffer). 
         oBe:UpdateData(input-output dataset-handle hdataset by-reference, oUpdateRequest).

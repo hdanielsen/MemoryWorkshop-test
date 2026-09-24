@@ -24,7 +24,6 @@ class TestGetInventoryTransaction inherits TestBase:
     define protected property BatchSize as integer   no-undo get. set.      
     define protected property Resource  as character no-undo init "inventoryTransactions" get.       
 
-
     @Before.
     method public void setUpBeforeClass(  ):
         define variable iCount as integer no-undo.

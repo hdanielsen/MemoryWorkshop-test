@@ -122,7 +122,7 @@ class TestGetBillTo inherits TestBase:
         // write without dataset serialize-name  
         hDataset:write-json("JsonObject",oJson,yes,?,no,yes).
 
-        oJson:WriteFile(substitute("temp/get-be-&1.json",Resource)). 
+        oJson:WriteFile(substitute("temp/get-be-&1.json",Resource),true). 
 
         if cPublicNameOrDesc > "" then 
             Assert:IsTrue(IsJsonArraySortedByProperty(oJson:GetJsonArray(Resource),cPublicNameOrDesc,true),substitute("Sorted on &1",cNameOrDescription)).

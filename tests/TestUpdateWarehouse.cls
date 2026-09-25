@@ -134,7 +134,7 @@ class TestUpdateWarehouse inherits TestBase:
 
         oUpdateRequest = new UpdateDataRequest(cMainRequestBuffer).
         oBe:UpdateData(input-output dataset-handle hdataset by-reference, oUpdateRequest).
-        // log the json - will be sued for delete
+        // log the json - will be used for delete
         hDataset:write-json ("file",substitute("temp/posted-be-&1.json",Resource),yes).
 
         return.

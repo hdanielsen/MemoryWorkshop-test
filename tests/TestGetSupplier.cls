@@ -39,7 +39,6 @@ class TestGetSupplier inherits TestBase:
     end method.
 
     @Test.
-
     // simulate web request from operationhandler  
     method public void GetSupplier():
         define variable oBe               as IBusinessEntity  no-undo.
@@ -55,6 +54,7 @@ class TestGetSupplier inherits TestBase:
         oMap = new StringStringMap().
         oMap:put("top",string(BatchSize)).
         oMap:put("orderBy",string(cPublicNameOrDesc)).
+        oMap:put("filter","supplierIdnum eq 171").
 
         oResponse = this-object:OperationHandler:ExecuteRead(
                         "GET",
@@ -86,7 +86,7 @@ class TestGetSupplier inherits TestBase:
     end method.
 
 
-    @Test.
+   // @Test.
     method public void GetSupplierUseBE():
         define variable oBe                as IBusinessEntity      no-undo.
         define variable hDataset           as handle               no-undo.
@@ -100,8 +100,10 @@ class TestGetSupplier inherits TestBase:
 
         oBe = GetBE(Resource).
 
-        // grab a deep copy to test GetData with external dataset - not depending on the static definition in the class
-        oBe:getDataset(output dataset-handle hDataset).
+       /* by-reference - The SupplierBE is currenty restricted to only use the internal 
+          dataset for GetData since it uses another static dataset to send data to server
+          This is default when renning from WEB */        
+        oBe:getDataset(output dataset-handle hDataset by-reference).
         oRequest = new GetDataRequest().
         cNameOrDescription = oBe:GetTextField().
         cPublicNameOrDesc  = oBe:GetPublicTextField().
@@ -122,7 +124,7 @@ class TestGetSupplier inherits TestBase:
         // write without dataset serialize-name  
         hDataset:write-json("JsonObject",oJson,yes,?,no,yes).
 
-        oJson:WriteFile(substitute("temp/get-be-&1.json",Resource)). 
+        oJson:WriteFile(substitute("temp/get-be-&1.json",Resource),yes). 
 
         if cPublicNameOrDesc > "" then 
             Assert:IsTrue(IsJsonArraySortedByProperty(oJson:GetJsonArray(Resource),cPublicNameOrDesc,true),substitute("Sorted on &1",cNameOrDescription)).

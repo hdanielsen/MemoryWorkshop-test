@@ -119,9 +119,9 @@ class TestUpdateSupplier inherits TestBase:
 
         oBe = GetBE(Resource).
 
-        /* by-reference - The SupplierBE is currenty restricted to only use the internal 
-           dataset for Update since it uses a nothere static dataset to send data to server
-           This is default when renning from WEB */
+        /* by-reference - The SupplierBE is currently restricted to only use the internal 
+           dataset for Update since it uses another static dataset to send data to server
+          (This is default when running from WEB) */
         oBe:getDataset(output dataset-handle hDataset by-reference).
         cMainRequestBuffer = hDataset:get-buffer-handle(1):name.
 
@@ -133,9 +133,10 @@ class TestUpdateSupplier inherits TestBase:
         // set tracking on all buffer so the records will be marked as row-created when using read-json
         DatasetUtil:SetTrackingChanges(hdataset,true).
         hDataset:read-json ("JsonObject",oJson).
+        DatasetUtil:SetTrackingChanges(hdataset,false).
         oUpdateRequest = new UpdateDataRequest(cMainRequestBuffer).
         oBe:UpdateData(input-output dataset-handle hdataset by-reference, oUpdateRequest).
-        // log the json - will be sued for delete
+        // log the json - will be used for delete
         hDataset:write-json ("file",substitute("temp/posted-be-&1.json",Resource),yes).
 
         return.

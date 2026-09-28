@@ -21,7 +21,7 @@
             "discount": 10,
             "itemNum": 54,
             "lineNum": 1,
-            "orderLineStatus": "Shipped",
+            "orderLineStatus": "Ordered",
             "price": 4.86,
             "quantity": 30
           },
@@ -29,7 +29,7 @@
             "discount": 10,
             "itemNum": 55,
             "lineNum": 2,
-            "orderLineStatus": "Shipped",
+            "orderLineStatus": "Ordered",
             "price": 23.85,
             "quantity": 21
           },
@@ -37,7 +37,7 @@
             "discount": 10,
             "itemNum": 53,
             "lineNum": 3,
-            "orderLineStatus": "Shipped",
+            "orderLineStatus": "Ordered",
             "price": 8.77,
             "quantity": 80
           },
@@ -45,7 +45,7 @@
             "discount": 10,
             "itemNum": 28,
             "lineNum": 4,
-            "orderLineStatus": "Shipped",
+            "orderLineStatus": "Ordered",
             "price": 23.0,
             "quantity": 40
           },
@@ -53,7 +53,7 @@
             "discount": 10,
             "itemNum": 39,
             "lineNum": 5,
-            "orderLineStatus": "Shipped",
+            "orderLineStatus": "Ordered",
             "price": 34.0,
             "quantity": 75
           },
@@ -61,7 +61,7 @@
             "discount": 10,
             "itemNum": 26,
             "lineNum": 6,
-            "orderLineStatus": "Shipped",
+            "orderLineStatus": "Ordered",
             "price": 4.99,
             "quantity": 30
           }

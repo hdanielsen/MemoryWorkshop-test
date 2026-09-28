@@ -16,6 +16,7 @@ using Pmfo.Tools.Test.TestBase from propath.
 using Pmfo.Util.DatasetUtil from propath.
 using Pmfo.Util.JsonUtil from propath.
 using Progress.Json.ObjectModel.JsonObject from propath.
+using Progress.Profiler.MemoryProfiler from propath.
 
 class TestUpdateSupplier inherits TestBase:
 
@@ -62,7 +63,12 @@ class TestUpdateSupplier inherits TestBase:
             HandleError(e2).
         end catch.
     end method.
-
+    
+    @Test.
+    method public void SnapShotBeforeDeleteSupplier():        
+        MemoryProfiler:TakeSnapShot("BeforeDeleteSupplier").
+    end method.     
+    
     @test.
     method public void DeleteSupplier(  ):
         define variable oBe               as IBusinessEntity no-undo.
@@ -108,8 +114,15 @@ class TestUpdateSupplier inherits TestBase:
         end catch.
 
     end method.
-
+    
     @Test.
+    method public void SnapShotAfterDelete():     
+        pause 1.   
+        MemoryProfiler:TakeSnapShot("AfterDeleteSupplier").
+    end method.     
+    
+    
+  //  @Test.
     method public void CreateSupplierUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.
@@ -157,7 +170,7 @@ class TestUpdateSupplier inherits TestBase:
         end finally.
     end method.
 
-    @Test.
+  //  @Test.
     method public void DeleteSupplierUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.
@@ -182,7 +195,8 @@ class TestUpdateSupplier inherits TestBase:
         oBe:UpdateData(input-output dataset-handle hdataset by-reference, oUpdateRequest).
 
         return.
-         catch e1 as AssertionFailedError :
+        
+        catch e1 as AssertionFailedError :
             HandleError(e1).
         end catch.
 

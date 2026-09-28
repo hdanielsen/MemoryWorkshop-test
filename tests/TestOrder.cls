@@ -235,7 +235,7 @@ class TestOrder inherits TestBase:
         oMap:put("top","20").
         
         oResponse = OperationHandler:ExecuteRead("GET",
-                                                 "http://10.0.0.198:8080/minster/web/psi", 
+                                                 "http://10.0.0.198:8080/minster/web/api", 
                                                  "orders",
                                                  oMap, 
                                                  oBe).

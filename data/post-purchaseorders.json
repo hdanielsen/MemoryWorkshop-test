@@ -3,7 +3,7 @@
       {
         "dateEntered": "2025-10-30",
         "purchaseOrderNum": 1,
-        "purchaseOrderStatus": "Received",
+        "purchaseOrderStatus": "Ordered",
         "receiveDate": "2026-01-24",
         "supplierIDNum": 1,
         "purchaseOrderLines": [
@@ -12,7 +12,7 @@
             "extendedPrice": 49.65,
             "itemNum": 3,
             "lineNum": 1,
-            "lineStatus": "Received",
+            "lineStatus": "Ordered",
             "price": 16.55,
             "quantity": 3
           },
@@ -21,7 +21,7 @@
             "extendedPrice": 405.0,
             "itemNum": 45,
             "lineNum": 2,
-            "lineStatus": "Received",
+            "lineStatus": "Ordered",
             "price": 81.0,
             "quantity": 5
           },
@@ -30,7 +30,7 @@
             "extendedPrice": 634.0,
             "itemNum": 46,
             "lineNum": 3,
-            "lineStatus": "Received",
+            "lineStatus": "Ordered",
             "price": 317.0,
             "quantity": 2
           },
@@ -39,7 +39,7 @@
             "extendedPrice": 58.85,
             "itemNum": 47,
             "lineNum": 4,
-            "lineStatus": "Received",
+            "lineStatus": "Ordered",
             "price": 11.77,
             "quantity": 5
           }

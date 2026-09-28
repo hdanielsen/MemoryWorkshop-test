@@ -1,7 +1,7 @@
-  /*------------------------------------------------------------------------
+/*------------------------------------------------------------------------
     File        : TestUpdateOrder 
     Purpose     : Unit test for update of order data          
-  ----------------------------------------------------------------------*/
+----------------------------------------------------------------------*/
 
 
 block-level on error undo, throw.
@@ -111,7 +111,7 @@ class TestUpdateOrder inherits TestBase:
     end method.
     
     
-     @Test. 
+    @Test. 
     method public void CreateOrderUsingBE(  ):  
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.
@@ -180,7 +180,8 @@ class TestUpdateOrder inherits TestBase:
         oBe:UpdateData(input-output dataset-handle hdataset by-reference, oUpdateRequest).
        
         return.
-         catch e1 as AssertionFailedError :
+        
+        catch e1 as AssertionFailedError :
             HandleError(e1).    
         end catch. 
         
@@ -197,5 +198,5 @@ class TestUpdateOrder inherits TestBase:
         end finally.  
     end method.
     
-     
+      
 end class.

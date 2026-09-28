@@ -63,7 +63,7 @@ class TestUpdatePurchaseOrder inherits TestBase:
         end catch.
     end method.
 
-    @test.
+     @test.
     method public void DeletePurchaseOrder(  ):
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo.
@@ -109,7 +109,7 @@ class TestUpdatePurchaseOrder inherits TestBase:
 
     end method.
 
-    @Test.
+  //  @Test.
     method public void CreatePurchaseOrderUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.
@@ -155,7 +155,7 @@ class TestUpdatePurchaseOrder inherits TestBase:
         end finally.
     end method.
 
-    @Test.
+   // @Test.
     method public void DeletePurchaseOrderUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.

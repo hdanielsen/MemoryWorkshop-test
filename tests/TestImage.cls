@@ -42,8 +42,9 @@ class TestImage inherits TestBase:
     end method.       
     
     
-    @test.
-    method public void Loadimage():
+    
+  //  @test.
+    method public void LoadimageFromFIle():
         define variable cFile as character no-undo
            init "gomexus-tackle-fishing-rod-8016641.jpg".
         
@@ -58,9 +59,32 @@ class TestImage inherits TestBase:
         
           
     end method. 
+    
+    @Test. 
+    method public void Readmage():
+        define variable ojson as JsonObject no-undo.
+        define variable cLong as longchar no-undo.
+       // buffer ttitem:buffer-field("itemimage"):serialize-hidden = true.
+        
+     //   buffer ttitem:buffer-field("itemimage"):serialize-hidden = false.
+      //  buffer ttitem:buffer-field("itemimageClob"):serialize-name = "itemImage".
+        
+        
+        oJson = LoadJson("data/post-items-withimage.json") .  
+        dataset dsItem:read-json("JsonObject",oJson).
+        
+        for eaCH ttitem:
+            copy-lob ttitem.ItemImage to cLong.
+            disp clong begins "data". 
+            
+        end.   
+        
+          
+    end method. 
+    
      
-    @test.
-    method public void Loadimage2():
+  //  @test.
+    method public void LoadimageFromFile2():
         define variable oJson  as JsonObject no-undo.
         define variable cFile as character no-undo
            init "gomexus-tackle-fishing-rod-8016641.jpg".

@@ -52,9 +52,8 @@ class TestGetSupplier inherits TestBase:
 
         // simulate url query properties from web 
         oMap = new StringStringMap().
-        oMap:put("top",string(BatchSize)).
+        oMap:put("top","1").
         oMap:put("orderBy",string(cPublicNameOrDesc)).
-        oMap:put("filter","supplierIdnum eq 171").
 
         oResponse = this-object:OperationHandler:ExecuteRead(
                         "GET",

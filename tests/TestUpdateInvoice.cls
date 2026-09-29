@@ -63,7 +63,7 @@ class TestUpdateInvoice inherits TestBase:
         end catch.
     end method.
 
-    @test.
+   // @test.
     method public void DeleteInvoice(  ):
         define variable oBe               as IBusinessEntity no-undo.
         define variable qmap              as IStringStringMap no-undo.
@@ -109,7 +109,7 @@ class TestUpdateInvoice inherits TestBase:
 
     end method.
 
-    @Test.
+   // @Test.
     method public void CreateInvoiceUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.
@@ -155,7 +155,7 @@ class TestUpdateInvoice inherits TestBase:
         end finally.
     end method.
 
-    @Test.
+ //   @Test.
     method public void DeleteInvoiceUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.

@@ -2,34 +2,16 @@
     "invoices": [
   
       {
-        "adjustment": 50.0,
-        "amount": 541.75,
-        "custNum": 3025,
-        "invoiceDate": "2023-05-24",
         "invoicenum": 1,
-        "orderNum": 10670,
-        "shipCharge": 81.26,
-        "totalPaid": 600.0
+        "orderNum": 10670
       },
       {
-        "adjustment": 70.0,
-        "amount": 1367.35,
-        "custNum": 3220,
-        "invoiceDate": "2023-08-23",
         "invoicenum": 2,
-        "orderNum": 10675,
-        "shipCharge": 205.1,
-        "totalPaid": 1300.0
+        "orderNum": 10675 
       },
       {
-        "adjustment": 200.0,
-        "amount": 15147.81,
-        "custNum": 3110,
-        "invoiceDate": "2023-03-28",
         "invoicenum": 3,
-        "orderNum": 10685,
-        "shipCharge": 2272.17,
-        "totalPaid": 15000.0
+        "orderNum": 10685
       }
    ]
  }

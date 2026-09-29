@@ -16,8 +16,10 @@ using Pmfo.Tools.Test.TestBase from propath.
 using Pmfo.Util.DatasetUtil from propath.
 using Pmfo.Util.JsonUtil from propath.
 using Progress.Json.ObjectModel.JsonObject from propath.
+using Pmfo.Core.Error.BadRequestError from propath.
+using OpenEdge.Core.Assert from propath.
 
-class TestDeleteSupplier-5 inherits TestBase:
+class TestDeleteSupplierWithOutstandingPO inherits TestBase:
 
     define protected property Resource as character no-undo init "suppliers" get.
 
@@ -34,18 +36,18 @@ class TestDeleteSupplier-5 inherits TestBase:
         define variable oResponse         as JsonObject no-undo.
         define variable oMap              as StringStringMap no-undo.
         define variable oJson             as JsonObject no-undo.
-        define variable oJsonPosted       as JsonObject no-undo.
+        define variable oJsonWithResponse as JsonObject no-undo.
 
         oBe = GetBE(Resource).
         ShowErrorsInWindow = true.
         oMap = new StringStringMap().
 
-        // load the last posted json for this BE
-        oJsonPosted = LoadJson(substitute("data/delete-supplier-5.json",Resource)).
+        // load a posted json for this BE
+        oJsonWithResponse = LoadJson(substitute("data/delete-supplier-5.json",Resource)).
 
         oJson = new JsonObject().
         // add the resource array from the post response to the new json
-        oJson:Add(Resource,oJsonPosted:GetJsonObject("response"):GetJsonArray(Resource)).
+        oJson:Add(Resource,oJsonWithResponse:GetJsonObject("response"):GetJsonArray(Resource)).
 
         oResponse = OperationHandler:ExecuteUpdate(
                         "DELETE",
@@ -61,14 +63,18 @@ class TestDeleteSupplier-5 inherits TestBase:
 
         return.
 
-        catch e1 as AssertionFailedError :
-            HandleError(e1).
-        end catch.
-
-        // show application errors in a window
-        catch e2 as Progress.Lang.Error :
-            ShowErrorsInWindow = true.
+        catch e1 as BadRequestError :
+            Assert:IsTrue(e1:GetMessage(1) matches "*Supplier*cannot be deleted*","Throw message about supplier cannot be deleted").
+        end.
+        
+        catch e2 as AssertionFailedError :
             HandleError(e2).
+        end catch.
+                
+        // show application errors in a window
+        catch e3 as Progress.Lang.Error :
+            ShowErrorsInWindow = true.
+            HandleError(e3).
         end catch.
 
     end method.

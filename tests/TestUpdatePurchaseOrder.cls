@@ -109,7 +109,7 @@ class TestUpdatePurchaseOrder inherits TestBase:
 
     end method.
 
-  //  @Test.
+    @Test.
     method public void CreatePurchaseOrderUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.
@@ -119,8 +119,8 @@ class TestUpdatePurchaseOrder inherits TestBase:
 
         oBe = GetBE(Resource).
 
-        // grab a deep copy to test UpdateData without depending on the static definition in the class
-        oBe:getDataset(output dataset-handle hDataset).
+        // use intenral submit override is not ready for extenral
+        oBe:getDataset(output dataset-handle hDataset by-reference).
         cMainRequestBuffer = hDataset:get-buffer-handle(1):name.
 
         // load the predefined test data
@@ -155,7 +155,7 @@ class TestUpdatePurchaseOrder inherits TestBase:
         end finally.
     end method.
 
-   // @Test.
+    @Test.
     method public void DeletePurchaseOrderUsingBE(  ):
         define variable oBe                as IBusinessEntity no-undo.
         define variable hDataset           as handle no-undo.

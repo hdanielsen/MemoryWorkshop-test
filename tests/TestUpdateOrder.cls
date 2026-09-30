@@ -121,8 +121,9 @@ class TestUpdateOrder inherits TestBase:
            
         oBe = GetBE(Resource).
         
-        // grab a deep copy to test UpdateData without depending on the static definition in the class
-        oBe:getDataset(output dataset-handle hDataset).
+        
+        oBe:getDataset(output dataset-handle hDataset by-reference).
+        // use the internal dataset  
         cMainRequestBuffer = hDataset:get-buffer-handle(1):name.
         
         // load the predefined test data 
@@ -138,7 +139,6 @@ class TestUpdateOrder inherits TestBase:
         oBe:UpdateData(input-output dataset-handle hdataset by-reference, oUpdateRequest).
         // log the json - will be used for delete
         hDataset:write-json ("file",substitute("temp/posted-be-&1.json",Resource),yes).  
-        
         return.
         catch e1 as AssertionFailedError :
             HandleError(e1).    

@@ -43,7 +43,8 @@ class TestGetAddress inherits TestBase:
         define variable oJson             as JsonObject       no-undo.
 
         oBe = GetBE(Resource).
-       
+       message type-of(oBe,IBusinessEntity)
+       view-as alert-box.
         // simulate url query properties from web 
         oMap = new StringStringMap().
         oMap:put("top","20").
